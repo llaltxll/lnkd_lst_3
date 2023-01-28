@@ -8,5 +8,7 @@ int main()
 	{
 		run = printMenu();
 	}
+
+	freeList();
 	return 0;
 }

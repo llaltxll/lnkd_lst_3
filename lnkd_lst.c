@@ -50,4 +50,39 @@ struct NODE **pointerToLastPointer()
 	return last;
 }
 
-	
+int pop()
+{
+	struct NODE **ptr2ptr2last_node;
+	int data;
+	if (!HEAD_PTR) return -1;
+	ptr2ptr2last_node = &HEAD_PTR;
+	//find pointer that points to a node that points to zero
+	while ((*ptr2ptr2last_node)->next) ptr2ptr2last_node = &((*ptr2ptr2last_node)->next);
+	data = (*ptr2ptr2last_node)->data;	
+	//pass pointer to pointer to what we want to delete
+	freeNode(ptr2ptr2last_node);
+
+	return data;
+}
+
+void freeNode(struct NODE **ptr_node)
+{	
+	//					  this points to the next node
+	struct NODE *delete = *ptr_node;
+	//this is updating the next_ptr in the node 
+	//that preceeds the deletion target node
+	*ptr_node = delete->next;
+
+	free(delete);
+	delete = NULL;
+}
+
+void freeList()
+{
+	while (HEAD_PTR != 0)
+	{	
+		//pop(); less efficient
+		freeNode(&HEAD_PTR);
+	}
+}
+
